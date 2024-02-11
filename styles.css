@@ -1,0 +1,39 @@
+body {
+    transition: background-color 0.5s ease;
+    color: var(--text-color);
+}
+.dark-mode {
+    --text-color: white;
+    background-color: black;
+}
+.light-mode {
+    --text-color: black;
+    background-color: white;
+}
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.animate {
+    transition: transform 0.2s;
+}
+.animate:hover {
+    transform: scale(1.1);
+}
+.figure-caption {
+    margin-top: 20px;  
+}
