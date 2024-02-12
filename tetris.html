@@ -31,13 +31,15 @@
       
           <script>
             const music = document.getElementById('bg-music');
+            music.autoplay = true;
             document.getElementById('start-button').addEventListener('click', function() {
-              if (music.paused) {
-                music.play();
-              } else {
-                music.pause();
-              }
+            if (music.paused) {
+                 music.play();
+                } else {
+            music.pause();
+             }
             });
+
           </script>
           
       
