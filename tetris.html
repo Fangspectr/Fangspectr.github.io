@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>randomshit</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body class="dark-mode">
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+        <a href="tetris.html">Tetris</a>
+        <button id="modeToggle">💡|🌙</button>
+      </div>
+      <button id="startButton">Start Game</button>
+      <script>// Tetris game board
+        let board = Array.from({length: 20}, () => new Array(10).fill(0));
+        
+        // Tetris pieces
+        const pieces = [
+          [[1, 1, 1, 1]], // I
+          [[1, 1], [1, 1]], // O
+          [[1, 1, 0], [0, 1, 1]], // Z
+          [[0, 1, 1], [1, 1]], // S
+          [[1, 1, 1], [0, 1, 0]], // T
+          [[1, 1, 1], [1, 0, 0]], // L
+          [[1, 1, 1], [0, 0, 1]]  // J
+        ];
+        
+        // Function to rotate a piece
+        function rotate(piece) {
+          return piece[0].map((val, index) => piece.map(row => row[index])).reverse();
+        }
+        
+        // Function to check if a move is valid
+        function isValidMove(piece, board, y, x) {
+          for (let i = 0; i < piece.length; i++) {
+            for (let j = 0; j < piece[i].length; j++) {
+              if (piece[i][j] && (board[y + i] === undefined || board[y + i][x + j] === undefined || board[y + i][x + j])) {
+                return false;
+              }
+            }
+          }
+          return true;
+        }
+        
+        // Function to place a piece on the board
+        function placePiece(piece, board, y, x) {
+          for (let i = 0; i < piece.length; i++) {
+            for (let j = 0; j < piece[i].length; j++) {
+              if (piece[i][j]) {
+                board[y + i][x + j] = 1;
+              }
+            }
+          }
+        }
+        
+        // Function to clear full lines from the board
+        function clearLines(board) {
+          outer: for (let i = board.length - 1; i >= 0; i--) {
+            for (let j = 0; j < board[i].length; j++) {
+              if (!board[i][j]) {
+                continue outer;
+              }
+            }
+            board.splice(i, 1);
+            board.unshift(new Array(10).fill(0));
+          }
+        }
+        
+        // Main game loop
+        function gameLoop(board, pieces) {
+          let piece = pieces[Math.floor(Math.random() * pieces.length)];
+          let x = Math.floor(board[0].length / 2) - Math.floor(piece[0].length / 2);
+          for (let y = 0; y < board.length; y++) {
+            if (!isValidMove(piece, board, y, x)) {
+              placePiece(piece, board, y - 1, x);
+              clearLines(board);
+              return gameLoop(board, pieces);
+            }
+          }
+        }
+        
+        // Start the game
+        gameLoop(board, pieces);
+        </script>
+    </body>
+    </html>
